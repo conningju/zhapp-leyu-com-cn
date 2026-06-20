@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>壹号娱乐 · 随手翻到的笔记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f7f5;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1f2e2b;
+            line-height: 1.65;
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-wrap {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* 卡片网格感——用细碎蓝绿点缀 */
+        .grid-card {
+            background: #fffffffa;
+            backdrop-filter: blur(1px);
+            border-radius: 24px;
+            padding: 1.8rem 1.6rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 4px 12px rgba(50, 100, 90, 0.06), 0 1px 3px rgba(30, 80, 70, 0.04);
+            border: 1px solid #dbeae6;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .grid-card:hover {
+            box-shadow: 0 8px 20px rgba(30, 100, 85, 0.08);
+        }
+
+        /* 点缀小色块 */
+        .accent-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: #3fa89c;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+        }
+
+        .accent-dot.teal-light {
+            background: #7fcbc1;
+            width: 8px;
+            height: 8px;
+        }
+
+        .accent-line {
+            height: 3px;
+            width: 48px;
+            background: linear-gradient(90deg, #3fa89c, #b6dfd8);
+            border-radius: 6px;
+            margin: 0.75rem 0 1.2rem 0;
+        }
+
+        /* 标题 */
+        h1 {
+            font-size: 2rem;
+            font-weight: 560;
+            letter-spacing: -0.01em;
+            color: #13312b;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #4f7b73;
+            margin-left: 0.2rem;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #1a403a;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2 .accent-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            background: #44a799;
+            margin-right: 0.6rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1f423c;
+            margin: 1.2rem 0 0.4rem;
+        }
+
+        /* 段落 */
+        p {
+            margin-bottom: 1rem;
+            color: #274a43;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+            background: #e5f3ef;
+            padding: 0.1rem 0.75rem 0.1rem 0;
+            border-radius: 0 20px 20px 0;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+
+        .subtle-meta {
+            color: #4c7b72;
+            font-size: 0.9rem;
+            border-left: 3px solid #98cec4;
+            padding-left: 0.8rem;
+            margin: 1rem 0 0.8rem;
+        }
+
+        /* 特点列表（卡片+图标感） */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.9rem;
+            margin: 1.2rem 0 0.4rem;
+        }
+
+        .feature-item {
+            background: #f1faf7;
+            border-radius: 18px;
+            padding: 1rem 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            border: 1px solid #d2e7e1;
+            transition: background 0.2s;
+        }
+
+        .feature-item:hover {
+            background: #e3f2ed;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: #3fa89c;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .feature-icon.alt {
+            background: #6abfb4;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text strong {
+            display: block;
+            font-weight: 560;
+            color: #14332d;
+            margin-bottom: 0.1rem;
+        }
+
+        .feature-text span {
+            font-size: 0.9rem;
+            color: #3b665d;
+        }
+
+        /* 引用 / 温和结尾 */
+        .closing-note {
+            background: #def0eb;
+            border-radius: 28px;
+            padding: 1.4rem 1.6rem;
+            margin: 1.8rem 0;
+            border-left: 5px solid #3fa89c;
+            font-style: normal;
+        }
+
+        .closing-note p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-mini {
+            background: #f6fcf9;
+            border-radius: 24px;
+            padding: 1.2rem 1.4rem;
+            margin: 1.2rem 0;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.5rem;
+            border-bottom: 1px dashed #c7ddd6;
+            padding-bottom: 0.4rem;
+        }
+
+        .faq-mini summary {
+            font-weight: 500;
+            cursor: pointer;
+            color: #1a403a;
+            padding: 0.25rem 0;
+        }
+
+        .faq-mini details p {
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+            padding-left: 0.5rem;
+            color: #2b554c;
+        }
+
+        /* 链接 */
+        a {
+            color: #1d6b5f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b3d3cb;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        a:hover {
+            color: #0f4d43;
+            border-bottom-color: #1d6b5f;
+        }
+
+        /* 分隔小装饰 */
+        .divider-wave {
+            text-align: center;
+            color: #7fbaaf;
+            letter-spacing: 6px;
+            font-size: 1.1rem;
+            margin: 0.5rem 0 1.2rem;
+            opacity: 0.5;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+
+            .grid-card {
+                padding: 1.3rem 1rem;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 0.7rem;
+            }
+
+            .lead {
+                font-size: 1rem;
+            }
+
+            .closing-note {
+                padding: 1rem 1.2rem;
+            }
+
+            .faq-mini {
+                padding: 0.8rem 0.9rem;
+            }
+
+            .accent-line {
+                width: 36px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .feature-item {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* 收藏提示小tag */
+        .bookmark-tip {
+            display: inline-block;
+            background: #d6efe8;
+            color: #17574b;
+            padding: 0.15rem 1rem 0.15rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 450;
+            letter-spacing: 0.3px;
+            border: 1px solid #b2d9d0;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- 开场短句 —— 再次访问的叙述感 -->
+    <div class="grid-card" style="padding-bottom: 1.2rem;">
+        <p class="bookmark-tip" style="margin-bottom: 0.6rem;">📌 如果你又翻到这里</p>
+        <h1>
+            <span class="accent-dot" style="width:16px;height:16px;"></span>
+            壹号娱乐
+            <small>· 随手记</small>
+        </h1>
+        <div class="accent-line"></div>
+        <p class="lead">有些页面值得再次打开，有些内容常看常新。</p>
+        <p>距离上一次停下来浏览 <a href="https://root-1hao.com">壹号娱乐</a> 也许过了几天，也许久到书签栏已经落灰。这个站点还在，也没有刻意改头换面；它更适合被当作一个安静的角落，而不是喧闹的入口。</p>
+        <p style="margin-bottom:0.2rem;">如果你愿意，可以把当前页加入浏览器收藏夹，或者记在备忘录里。下次再想起时，直接回来就好。</p>
+    </div>
+
+    <!-- 承接段落：收藏与持续关注 -->
+    <div class="grid-card">
+        <h2>
+            <span class="accent-dot"></span>
+            收藏、书签、以及「回头再看」
+        </h2>
+        <div class="subtle-meta">一点整理 · 关于持续关注的习惯</div>
+        <p>网络上的东西来来去去，但总有些地方让人愿意反复点开。<a href="https://root-1hao.com">壹号娱乐</a> 就属于这类——它不追赶热点，也没有弹窗催促。页面内容更偏向于提供一种稳定的陪伴感：资讯、想法、或是一些简单的娱乐碎片。</p>
+        <p>为了方便自己回头，我习惯在手机主屏添加书签，或是在电脑浏览器建一个专用文件夹。如果你也打算把它留在手边，直接收藏就好，不需要特别备注。</p>
+    </div>
+
+    <!-- 特点列表 —— 用卡片网格展示 -->
+    <div class="grid-card">
+        <h2>
+            <span class="accent-dot" style="background:#6abfb4;"></span>
+            几个值得留意的特点
+        </h2>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="feature-icon">☕</div>
+                <div class="feature-text">
+                    <strong>不赶时间</strong>
+                    <span>没有倒计时、开屏广告，页面节奏偏慢，适合随便翻翻。</span>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon alt">📇</div>
+                <div class="feature-text">
+                    <strong>信息克制</strong>
+                    <span>标题和摘要都尽量简短，不堆砌关键词，阅读负担小。</span>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔖</div>
+                <div class="feature-text">
+                    <strong>收藏友好</strong>
+                    <span>直接收藏 <a href="https://root-1hao.com">壹号娱乐</a> 即可，链接稳定，不用频繁核对。</span>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon alt">🔄</div>
+                <div class="feature-text">
+                    <strong>偶尔更新</strong>
+                    <span>内容隔段时间会有变化，但不会突然改版，熟悉感保留得不错。</span>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.95rem;">总的来说，这是一个你愿意记在备忘录里、而非单纯刷过去的页面。</p>
+    </div>
+
+    <!-- 场景 + FAQ 摘要 (温和混排) -->
+    <div class="grid-card">
+        <h2>
+            <span class="accent-dot" style="background:#5ab3a6;"></span>
+            适合什么场景下打开
+        </h2>
+        <p>我自己通常在以下时候会想起 <a href="https://root-1hao.com">壹号娱乐</a>：</p>
+        <ul style="margin-left:1.2rem; margin-bottom:0.8rem; color: #274a43;">
+            <li style="margin-bottom:0.25rem;">工作间隙想换个脑子，但不想刷短视频；</li>
+            <li style="margin-bottom:0.25rem;">晚上安静下来，随便看看有没有新内容；</li>
+            <li style="margin-bottom:0.25rem;">整理书签时顺手点开，确认还是那个干净的样子。</li>
+        </ul>
+        <div class="divider-wave">· · ·</div>
+        <div class="faq-mini">
+            <details>
+                <summary>为什么要把链接放在句子里？</summary>
+                <p>因为比起单独一行“访问官网”，嵌在句子里的 <a href="https://root-1hao.com">壹号娱乐</a> 读起来更自然，也更容易让人记住上下文。没有诱导，只是一个安静的引用。</p>
+            </details>
+            <details>
+                <summary>页面内容会一直不变吗？</summary>
+                <p>不会完全不变，但更新频率不高。如果你每隔一两周回来看一次，通常能发现一点小变化。适合不赶节奏的浏览习惯。</p>
+            </details>
+            <details>
+                <summary>需要注册或登录吗？</summary>
+                <p>不需要。纯粹的信息展示页，没有账户体系，打开就能看。收藏即拥有。</p>
+            </details>
+        </div>
+    </div>
+
+    <!-- 温和结尾 + 再次点明链接 -->
+    <div class="grid-card closing-note" style="margin-bottom:0.8rem;">
+        <p style="font-weight: 460;">📎 简单来说</p>
+        <p>如果你觉得这个站点值得留在浏览列表里，直接把 <a href="https://root-1hao.com">壹号娱乐</a> 添加到书签栏就好。不用备注什么，下次打开时，它还是那个你认识的样子。</p>
+        <p style="margin-bottom: 0; font-style: normal;">也欢迎随手分享给你的朋友——如果对方正好在找一个不聒噪的页面。</p>
+    </div>
+
+    <!-- 底部小彩蛋：再次收藏提示（无链接文本违规） -->
+    <div style="text-align: center; margin-top: 1.2rem; color: #5d877e; font-size: 0.8rem; letter-spacing: 0.5px; opacity: 0.7;">
+        <span>— 此页适合收藏 —</span><br>
+        <span style="display:inline-block; margin-top:6px;">🕊️ 可随时回来</span>
+    </div>
+</div>
+</body>
+</html>
